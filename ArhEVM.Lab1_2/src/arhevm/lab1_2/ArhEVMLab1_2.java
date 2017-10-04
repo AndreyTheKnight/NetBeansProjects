@@ -1,32 +1,20 @@
 package arhevm.lab1_2;
 
-import static java.lang.Math.random;
-
 public class ArhEVMLab1_2 {
-    
-    private class MyArr {
-        
-        private final int[][] values;
-        
-        public MyArr(int n, int m, int min, int max) {
-            this.values = new int[n][m];
-            for (int i = 0; i < n; i++)
-                for (int j = 0; j < m; j++)
-                    this.values[i][j] = min + (int)(random() * (max-min));
-        }
-        public void print() {
-            for (int[] row : this.values) {
-                for (int val : row)
-                    System.out.print(val + " ");
-                System.out.println();
-            }
-        }
-                
-    }
 
     public static void main(String[] args) {
-        // TODO code application logic here
         
+        MyArr arr = new MyArr(7, 5, -1, 1);
+        System.out.println("   Массив:");
+        arr.print();
+        int[] find = arr.find();
+        System.out.println();
+        if (find == null)
+            System.out.println("Строк, в которых элементы одинаковы, но могут "
+                    + "стоять в различной последовательности не найдено!");
+        else
+            System.out.println("Строки, в которых элементы одинаковы, но могут "
+                    + "стоять в различной последовательности: " + (find[0]+1) + " и " + (find[1]+1));
     }
     
 }
