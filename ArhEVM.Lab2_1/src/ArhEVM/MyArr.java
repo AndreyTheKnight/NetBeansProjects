@@ -10,7 +10,7 @@ package ArhEVM;
  * @author andre
  */
 public class MyArr {
-    private int[] value;
+    public int[] value;
     private int indexOfMax;
     
     public MyArr(int n, int min, int max) {
@@ -33,10 +33,16 @@ public class MyArr {
         int[] newArr = new int[this.value.length - 1];
         System.arraycopy(this.value, 0, newArr, 0, this.indexOfMax);
         try {
-            System.arraycopy(this.value, this.indexOfMax + 1, 
-                    newArr, this.indexOfMax, this.value.length - this.indexOfMax + 1);
-        } catch (IndexOutOfBoundsException e) {
+            System.arraycopy(this.value, this.indexOfMax + 1,
+                    newArr, this.indexOfMax, this.value.length - this.indexOfMax - 1);
+        } finally {
             this.value = newArr;
         }
+    }
+    public final String print() {
+        String result = "";
+        for (int val : this.value)
+            result += val + "  ";
+        return result;
     }
 }

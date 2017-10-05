@@ -63,7 +63,7 @@ public class Lab2_1 extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Параметры исходного массива");
+        jLabel4.setText("Параметры массива C");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,11 +118,15 @@ public class Lab2_1 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        MyArr arr = new MyArr(Integer.parseInt(this.nTxtFld.getText()), 
-                Integer.parseInt(this.minTxtFld.getText()), 
+        MyArr c = new MyArr(Integer.parseInt(this.nTxtFld.getText()),
+                Integer.parseInt(this.minTxtFld.getText()),
                 Integer.parseInt(this.maxTxtFld.getText()));
-            
-        }
+        MyArr d = new MyArr(c.value);
+        this.resultTxtArea.setText(" Массив С:\n" + c.print() +
+                "\n Массив D до удаления макс. элемента:\n" + d.print());
+        d.RemoveMax();
+        this.resultTxtArea.append("\n Массив D после удалнеия макс. элемента:\n"+
+                d.print());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
