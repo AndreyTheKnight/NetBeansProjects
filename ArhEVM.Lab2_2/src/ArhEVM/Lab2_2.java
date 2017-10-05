@@ -41,6 +41,7 @@ public class Lab2_2 extends javax.swing.JFrame {
         jTextArea1_result.setColumns(20);
         jTextArea1_result.setLineWrap(true);
         jTextArea1_result.setRows(5);
+        jTextArea1_result.setWrapStyleWord(true);
         jTextArea1_result.setName(""); // NOI18N
         jScrollPane1.setViewportView(jTextArea1_result);
 
@@ -59,6 +60,7 @@ public class Lab2_2 extends javax.swing.JFrame {
         jTextArea2_text.setColumns(20);
         jTextArea2_text.setLineWrap(true);
         jTextArea2_text.setRows(5);
+        jTextArea2_text.setWrapStyleWord(true);
         jTextArea2_text.setName(""); // NOI18N
         jScrollPane2.setViewportView(jTextArea2_text);
 

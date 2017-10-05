@@ -23,22 +23,30 @@ public class MyText {
         int indexOfSentence = 1;
         for (char chr : this.text.toCharArray())
             switch (chr) {
-                case '.':
                 case ' ':
                 case ',':
                 case '\n':
-                    if (currentWord.length() == 0) break;
+                    if (currentWord.isEmpty()) break;
                     shortestWord = (currentWord.length() < shortestWord.length()
                             ? currentWord : shortestWord);
                     longestWord = (currentWord.length() > longestWord.length()
                             ? currentWord : longestWord);
                     currentWord = "";
-                    if (chr != '.') break;
+                    break;
+                case '.':
+                    if (longestWord.isEmpty() && currentWord.isEmpty()) break;
+                    if (!currentWord.isEmpty()) {
+                        shortestWord = (currentWord.length() < shortestWord.length()
+                                ? currentWord : shortestWord);
+                        longestWord = (currentWord.length() > longestWord.length()
+                                ? currentWord : longestWord);
+                    }
                     result += "В "+(indexOfSentence++)+"-м предложении самое "
                             + "короткое слово - \"" + shortestWord + "\", а "
                             + "самое длинное - \"" + longestWord + "\".\n";
                     shortestWord = this.text;
                     longestWord = "";
+                    currentWord = "";
                     break;
                 default:
                     currentWord += chr;
