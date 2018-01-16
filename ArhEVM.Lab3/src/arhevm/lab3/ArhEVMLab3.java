@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vichmat.lab3;
+package arhevm.lab3;
 
 import java.io.PrintStream;
 
@@ -11,7 +11,7 @@ import java.io.PrintStream;
  *
  * @author andre
  */
-public class VichMatLab3 {
+public class ArhEVMLab3 {
 
     /**
      * @param args the command line arguments

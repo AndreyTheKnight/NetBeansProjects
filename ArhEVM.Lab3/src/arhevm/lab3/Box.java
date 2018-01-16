@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vichmat.lab3;
+package arhevm.lab3;
 
 /**
  *
  * @author andre
  */
-public interface WeightedBox {
+public interface Box extends ColoredBox, WeightedBox {
     
-    public int getWeight();
+    public int getVolume();
     
 }
