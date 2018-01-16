@@ -1,21 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package arhevm.lab3;
 
 import java.io.PrintStream;
 
-/**
- *
- * @author andre
- */
 public class ArhEVMLab3 {
-
-    /**
-     * @param args the command line arguments
-     */
     
     static private class SomeBox implements Box {
         
@@ -91,7 +78,7 @@ public class ArhEVMLab3 {
     }
     
     public static void main(String[] args) {
-        // TODO code application logic here
+
         PrintStream cout = System.out;
         Box theBox = new SomeBox();
         cout.println(theBox.getColor());
