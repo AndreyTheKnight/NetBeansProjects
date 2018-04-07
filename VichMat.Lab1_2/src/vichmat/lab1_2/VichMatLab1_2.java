@@ -29,7 +29,7 @@ public class VichMatLab1_2 {
         private int iterationsCount;
 
         public SystLinAlgUrav (double[][] a, double[] b, double eps) {
-            this.a = a; this.b = b; this.eps = eps;	this.n = a.length;
+            this.a = a; this.b = b; this.eps = eps; this.n = a.length;
             for (double e = eps; Math.round(e) == 0 && e != 0; e *= 10)
                 this.format += "#";
         }
