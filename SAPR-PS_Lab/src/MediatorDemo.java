@@ -1,13 +1,10 @@
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 class Mediator {
 
-    public static boolean   shuttingDown = false;
-    private boolean         slotFull = false;
-    private int             message;
+    private Object  messageLock;
+    private int     message;
 
     public synchronized void storeMessage(int message) {
         while (slotFull) {
@@ -77,10 +74,9 @@ class Consumer implements Runnable {
 }
 
 public class MediatorDemo {
+    public static final long TIME_TO_RUN = 5*1000;
     public static void main( String[] args ) {
-        List<Thread> objList = new ArrayList<>();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Нажмите ENTER для выхода");
+        ArrayList<Thread> objList = new ArrayList<>();
         Mediator md = new Mediator();
         objList.add(new Thread(new Producer(md)));
         objList.add(new Thread(new Producer(md)));
@@ -91,11 +87,8 @@ public class MediatorDemo {
         objList.forEach((p) -> {
             p.start();
         });
-        String exit = scanner.nextLine();
-        while (!Mediator.shuttingDown) {
-            if (exit.equals("")) {
-                Mediator.shuttingDown = true;
-            }
-        }
+        try {
+            Thread.sleep(TIME_TO_RUN);
+        } catch (InterruptedException e) {}
     }
 }
