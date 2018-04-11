@@ -13,7 +13,7 @@ public class Consumer1 extends Actor implements Runnable {
         for (String message = this.mediator.take();
              ! message.equals("DONE");
              message = this.mediator.take()) {
-            System.out.format("MESSAGE RECEIVED: %s%n", message);
+            System.out.format("Consumer1: %s%n", message);
             try {
                 Thread.sleep(random.nextInt(5000));
             } catch (InterruptedException e) {}
