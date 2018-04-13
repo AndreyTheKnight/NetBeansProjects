@@ -11,9 +11,13 @@ public class Producer1 extends Actor implements Runnable {
     public void run() {
         String importantInfo[] = {
             "Mares eat oats",
+            "Some string 1",
             "Does eat oats",
+            "Some string 2",
             "Little lambs eat ivy",
-            "A kid will eat ivy too"
+            "Some string 3",
+            "A kid will eat ivy too",
+            "Some string 4"
         };
         Random random = new Random();
 
