@@ -18,5 +18,6 @@ public class Consumer1 extends Actor implements Runnable {
                 Thread.sleep(random.nextInt(5000));
             } catch (InterruptedException e) {}
         }
+        this.mediator.put("DONE");
     }
 }
