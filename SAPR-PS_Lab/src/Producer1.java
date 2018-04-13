@@ -1,5 +1,6 @@
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 public class Producer1 extends Actor implements Runnable {
     
@@ -19,12 +20,10 @@ public class Producer1 extends Actor implements Runnable {
             "A kid will eat ivy too",
             "Some string 4"
         };
-        Random random = new Random();
-
         for (String importantInfo1 : importantInfo) {
             this.mediator.put(importantInfo1);
             try {
-                Thread.sleep(random.nextInt(5000));
+                Thread.sleep(ThreadLocalRandom.current().nextInt(5000));
             } catch (InterruptedException e) {}
         }
         this.mediator.put("DONE");

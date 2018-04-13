@@ -1,5 +1,5 @@
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Consumer1 extends Actor implements Runnable {
     
@@ -9,13 +9,12 @@ public class Consumer1 extends Actor implements Runnable {
 
     @Override
     public void run() {
-        Random random = new Random();
         for (String message = this.mediator.take();
              ! message.equals("DONE");
              message = this.mediator.take()) {
             System.out.format("Consumer1: %s%n", message);
             try {
-                Thread.sleep(random.nextInt(5000));
+                Thread.sleep(ThreadLocalRandom.current().nextInt(5000));
             } catch (InterruptedException e) {}
         }
         this.mediator.put("DONE");
