@@ -2,6 +2,7 @@
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Consumer1 extends Actor implements Runnable {
+    
     static private int newID = 1;
     private final int id = Consumer1.newID++;
     
@@ -21,4 +22,5 @@ public class Consumer1 extends Actor implements Runnable {
         }
         this.mediator.put("DONE");
     }
+    
 }
