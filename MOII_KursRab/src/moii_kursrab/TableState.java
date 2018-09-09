@@ -15,10 +15,10 @@ public class TableState {
     }
     
     public  Table   table;
-    private int    emptyRow;
-    private int    emptyCol;
-    public  int    heuristicDistance;
-    public  int    heuristicDepth;
+    private int     emptyRow;
+    private int     emptyCol;
+    public  int     heuristicDistance;
+    public  int     heuristicDepth;
     
     public TableState(final Table table, final int heuristicDistance,
             final int heuristicDepth) {
@@ -37,8 +37,8 @@ public class TableState {
             TableState goalState)
             throws ArrayIndexOutOfBoundsException {
         try {
-            this.table = currentState.move(moveDirection);
-            this.CalculateHeuristicDistance(goalState);
+            this.move(currentState, moveDirection);
+            this.calculateHeuristicDistance(goalState);
             this.heuristicDepth = currentState.heuristicDepth + 1;
         } catch (ArrayIndexOutOfBoundsException e) {
             throw e;
@@ -47,33 +47,27 @@ public class TableState {
     private void move(TableState currentState, MoveDirection moveDirection)
             throws ArrayIndexOutOfBoundsException {
         this.table = new Table(currentState.table.value.clone());
-        int newEmptyRow = currentState.emptyRow;
-        int newEmptyCol = currentState.emptyCol;
+        this.emptyRow = currentState.emptyRow;
+        this.emptyCol = currentState.emptyCol;
         switch (moveDirection) {
             case UP:
-                newEmptyRow--;
+                this.emptyRow--;
                 break;
             case RIGHT:
-                newEmptyCol++;
+                this.emptyCol++;
                 break;
             case DOWN:
-                newEmptyRow++;
+                this.emptyRow++;
                 break;
             case LEFT:
-                newEmptyCol--;
+                this.emptyCol--;
                 break;
         }
-        try {
-            this.table.value[this.emptyRow][this.emptyCol] = 
-                this.table.value[newEmptyRow][newEmptyCol];
-            this.table.value[newEmptyRow][newEmptyCol] = 0;
-            this.emptyRow = newEmptyRow;
-            this.emptyCol = newEmptyCol;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw e;
-        }
+        this.table.value[currentState.emptyRow][currentState.emptyCol] = 
+            this.table.value[this.emptyRow][this.emptyCol];
+        this.table.value[this.emptyRow][this.emptyCol] = 0;
     }
-    private void CalculateHeuristicDistance(TableState goalState) {
+    private void calculateHeuristicDistance(TableState goalState) {
         this.heuristicDistance = 0;
         int n = this.table.value.length;
         for (int iCurrent = 0; iCurrent < n; iCurrent++)
