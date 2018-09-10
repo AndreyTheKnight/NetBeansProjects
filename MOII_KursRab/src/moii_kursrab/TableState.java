@@ -1,6 +1,7 @@
 package moii_kursrab;
 
 import static java.lang.Math.abs;
+import java.util.Arrays;
 
 public class TableState {
     
@@ -16,6 +17,8 @@ public class TableState {
     
     public TableState(int[][] table) {
         this.table = table;
+        this.heuristicDistance = 0;
+        this.heuristicDepth = 0;
         for (int i = 0; i < this.table.length; i++)
             for (int j = 0; j < this.table.length; j++)
                 if (this.table[i][j] == 0) {
@@ -70,6 +73,36 @@ public class TableState {
                                     abs(jGoal - jCurrent);
                         }
     }
-    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TableState other = (TableState) obj;
+        if (this.emptyRow != other.emptyRow) {
+            return false;
+        }
+        if (this.emptyCol != other.emptyCol) {
+            return false;
+        }
+        if (!Arrays.deepEquals(this.table, other.table)) {
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Arrays.deepHashCode(this.table);
+        hash = 37 * hash + this.emptyRow;
+        hash = 37 * hash + this.emptyCol;
+        return hash;
+    }
     
 }
