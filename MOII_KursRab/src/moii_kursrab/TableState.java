@@ -1,6 +1,7 @@
 package moii_kursrab;
 
 import static java.lang.Math.abs;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TableState {
@@ -73,6 +74,18 @@ public class TableState {
                                     abs(jGoal - jCurrent);
                         }
     }
+    public boolean isSolvable() {
+        int sum = 0; int index = 0;
+        int[] tableAsVector = new int[this.table.length^2];
+        for (int[] tableLine : this.table)
+            for (int tableCell : tableLine)
+                tableAsVector[index++] = tableCell;
+        for (int i1 = 0; i1 < tableAsVector.length - 1; i1++)
+            for (int i2 = i1 + 1; i2 < tableAsVector.length; i2++)
+                if ((tableAsVector[i1] > tableAsVector[i2]) && 
+                        (tableAsVector[i2] != 0)) sum++;
+        return ((sum + this.emptyRow + 1) % 2 == 0);
+    }
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -91,10 +104,7 @@ public class TableState {
         if (this.emptyCol != other.emptyCol) {
             return false;
         }
-        if (!Arrays.deepEquals(this.table, other.table)) {
-            return false;
-        }
-        return true;
+        return Arrays.deepEquals(this.table, other.table);
     }
     @Override
     public int hashCode() {

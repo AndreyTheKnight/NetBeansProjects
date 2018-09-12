@@ -1,20 +1,23 @@
 package moii_kursrab;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Puzzle {
     
     private final   TableState  initState;
     private final   TableState  goalState;
-    private         List        open;
-    private         List        closed;
+    private         ArrayList   open;
+    private         ArrayList   closed;
     
     public Puzzle(int[][] initTable, int[][] goalTable) {
         this.initState = new TableState(initTable);
         this.goalState = new TableState(goalTable);
     }
     public void solve() {
-        
+        if (this.initState.isSolvable()) {
+            this.open.add(this.initState);
+            
+        }
     }
     
 }
