@@ -1,7 +1,6 @@
 package moii_kursrab;
 
 import static java.lang.Math.abs;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TableState {

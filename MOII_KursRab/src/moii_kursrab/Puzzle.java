@@ -16,7 +16,9 @@ public class Puzzle {
     public void solve() {
         if (this.initState.isSolvable()) {
             this.open.add(this.initState);
-            
+            while (!this.open.get(0).equals(this.goalState)) {
+                
+            }
         }
     }
     
