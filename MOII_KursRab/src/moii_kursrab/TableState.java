@@ -9,22 +9,24 @@ public class TableState {
         UP, RIGHT, DOWN, LEFT
     }
     
-    public  int[][] table;
-    private int     emptyRow;
-    private int     emptyCol;
-    public  int     heuristicDistance;
-    public  int     heuristicDepth;
+    public  int[][]     table;
+    public  int         emptyRow;
+    public  int         emptyCol;
+    public  int         heuristicDistance;
+    public  int         heuristicDepth;
+    public  TableState  previousState;
     
     public TableState(int[][] table) {
         this.table = table;
-        this.heuristicDistance = 0;
-        this.heuristicDepth = 0;
         for (int i = 0; i < this.table.length; i++)
             for (int j = 0; j < this.table.length; j++)
                 if (this.table[i][j] == 0) {
                     this.emptyRow = i;
                     this.emptyCol = j;
                 }
+        this.heuristicDistance = 0;
+        this.heuristicDepth = 0;
+        this.previousState = null;
     }
     public TableState(TableState currentState, MoveDirection moveDirection, 
             TableState goalState)
@@ -33,6 +35,7 @@ public class TableState {
             this.move(currentState, moveDirection);
             this.calculateHeuristicDistance(goalState);
             this.heuristicDepth = currentState.heuristicDepth + 1;
+            this.previousState = currentState;
         } catch (ArrayIndexOutOfBoundsException e) {
             throw e;
         }
@@ -72,18 +75,6 @@ public class TableState {
                             this.heuristicDistance += abs(iGoal - iCurrent) + 
                                     abs(jGoal - jCurrent);
                         }
-    }
-    public boolean isSolvable() {
-        int sum = 0; int index = 0;
-        int[] tableAsVector = new int[this.table.length^2];
-        for (int[] tableLine : this.table)
-            for (int tableCell : tableLine)
-                tableAsVector[index++] = tableCell;
-        for (int i1 = 0; i1 < tableAsVector.length - 1; i1++)
-            for (int i2 = i1 + 1; i2 < tableAsVector.length; i2++)
-                if ((tableAsVector[i1] > tableAsVector[i2]) && 
-                        (tableAsVector[i2] != 0)) sum++;
-        return ((sum + this.emptyRow + 1) % 2 == 0);
     }
     @Override
     public boolean equals(Object obj) {
