@@ -28,23 +28,20 @@ public class TableState {
         this.heuristicDepth = 0;
         this.previousState = null;
     }
-    public TableState(TableState currentState, MoveDirection moveDirection, 
-            TableState goalState)
-            throws ArrayIndexOutOfBoundsException {
-        try {
-            this.move(currentState, moveDirection);
-            this.calculateHeuristicDistance(goalState);
-            this.heuristicDepth = currentState.heuristicDepth + 1;
-            this.previousState = currentState;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw e;
-        }
+    public TableState(TableState previousState, MoveDirection moveDirection, 
+            TableState goalState) {
+        this.table = new int[previousState.table.length][];
+        for (int i = 0; i < previousState.table.length; i++)
+            this.table[i] = previousState.table[i].clone();
+        this.move(previousState, moveDirection);
+        this.calculateHeuristicDistance(goalState);
+        this.heuristicDepth = previousState.heuristicDepth + 1;
+        this.previousState = previousState;
     }
-    private void move(TableState currentState, MoveDirection moveDirection)
+    private void move(TableState previousState, MoveDirection moveDirection)
             throws ArrayIndexOutOfBoundsException {
-        this.table = currentState.table.clone();
-        this.emptyRow = currentState.emptyRow;
-        this.emptyCol = currentState.emptyCol;
+        this.emptyRow = previousState.emptyRow;
+        this.emptyCol = previousState.emptyCol;
         switch (moveDirection) {
             case UP:
                 this.emptyRow--;
@@ -59,7 +56,7 @@ public class TableState {
                 this.emptyCol--;
                 break;
         }
-        this.table[currentState.emptyRow][currentState.emptyCol] = 
+        this.table[previousState.emptyRow][previousState.emptyCol] = 
             this.table[this.emptyRow][this.emptyCol];
         this.table[this.emptyRow][this.emptyCol] = 0;
     }
