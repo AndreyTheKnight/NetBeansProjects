@@ -9,12 +9,12 @@ public class TableState {
         UP, RIGHT, DOWN, LEFT
     }
     
-    public  int[][]     table;
-    public  int         emptyRow;
-    public  int         emptyCol;
-    public  int         heuristicDistance;
-    public  int         heuristicDepth;
-    public  TableState  previousState;
+    public          int[][]     table;
+    public          int         emptyRow;
+    public          int         emptyCol;
+    private final   int         heuristicDistance;
+    private final   int         heuristicDepth;
+    public          TableState  previousState;
     
     public TableState(int[][] table) {
         this.table = table;
@@ -34,7 +34,7 @@ public class TableState {
         for (int i = 0; i < previousState.table.length; i++)
             this.table[i] = previousState.table[i].clone();
         this.move(previousState, moveDirection);
-        this.calculateHeuristicDistance(goalState);
+        this.heuristicDistance = this.calculateHeuristicDistance(goalState);
         this.heuristicDepth = previousState.heuristicDepth + 1;
         this.previousState = previousState;
     }
@@ -60,8 +60,8 @@ public class TableState {
             this.table[this.emptyRow][this.emptyCol];
         this.table[this.emptyRow][this.emptyCol] = 0;
     }
-    private void calculateHeuristicDistance(TableState goalState) {
-        this.heuristicDistance = 0;
+    private int calculateHeuristicDistance(TableState goalState) {
+        int heuristicDistance = 0;
         int n = this.table.length;
         for (int iCurrent = 0; iCurrent < n; iCurrent++)
             for (int jCurrent = 0; jCurrent < n; jCurrent++)
@@ -69,9 +69,16 @@ public class TableState {
                     for (int jGoal = 0; jGoal < n; jGoal++)
                         if (this.table[iCurrent][jCurrent] ==
                                 goalState.table[iGoal][jGoal]) {
-                            this.heuristicDistance += abs(iGoal - iCurrent) + 
+                            heuristicDistance += abs(iGoal - iCurrent) + 
                                     abs(jGoal - jCurrent);
                         }
+        return heuristicDistance;
+    }
+    public int getHeuristic() {
+        return this.heuristicDepth + this.heuristicDistance;
+    }
+    public boolean hasBetterHeuristic(TableState compareWith) {
+        return (this.getHeuristic()) < (compareWith.getHeuristic());
     }
     @Override
     public boolean equals(Object obj) {

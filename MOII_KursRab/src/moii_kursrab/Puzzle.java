@@ -1,6 +1,7 @@
 package moii_kursrab;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class Puzzle {
     
@@ -25,24 +26,27 @@ public class Puzzle {
     }
     public TableState[] solve() {
         if (!this.isSolvable()) return null;
-        LinkedList<TableState> open = new LinkedList(), 
-                closed = new LinkedList();
-        open.addLast(this.initState);
-        while (!open.peekFirst().equals(this.goalState)) {
+        PriorityQueue<TableState> open = new PriorityQueue<>((state1, state2) -> 
+                        Integer.compare(state1.getHeuristic(), state2.getHeuristic()));
+        ArrayList<TableState> closed = new ArrayList();
+        for (open.add(this.initState); !open.peek().equals(this.goalState); closed.add(open.poll())) {
+            ArrayList<TableState> newStates = new ArrayList();
             for (TableState.MoveDirection moveDirection : TableState.MoveDirection.values())
                 try {
-                    TableState newState = new TableState(open.peekFirst(), moveDirection, this.goalState);
-                    if (!open.removeIf((state) -> state.equals(newState) && state.heuristicDepth > newState.heuristicDepth))
-                        closed.removeIf((state) -> state.equals(newState) && state.heuristicDepth > newState.heuristicDepth);
-                    open.addLast(newState);
+                    TableState newState = new TableState(open.peek(), moveDirection, this.goalState);
+                    try {
+                        int idx = closed.indexOf(newState);
+                        if (newState.hasBetterHeuristic(closed.get(idx))) {
+                            closed.set(idx, closed.get(closed.size()-1));
+                            closed.remove(closed.size()-1);
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e1) {}
                 } catch (ArrayIndexOutOfBoundsException e) {}
-            closed.addLast(open.pollFirst());
-            open.sort((state1, state2) -> Integer.compare(state1.heuristicDepth + state1.heuristicDistance, 
-                    state2.heuristicDepth + state2.heuristicDistance));
+            open.addAll(newStates);
         }
-        int i = open.peekFirst().heuristicDepth; TableState[] solution = new TableState[i + 1];
-        for (TableState cursor = open.peekFirst(); cursor != null; cursor = cursor.previousState)
-            solution[i--] = cursor;
-        return solution;
+        ArrayList<TableState> solution = new ArrayList();
+        for (TableState cursor = open.peek(); cursor != null; cursor = cursor.previousState)
+            solution.add(cursor);
+        return solution.toArray(new TableState[solution.size()]);
     }
 }
