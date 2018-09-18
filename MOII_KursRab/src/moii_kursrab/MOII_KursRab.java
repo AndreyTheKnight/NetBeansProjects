@@ -4,8 +4,8 @@ public class MOII_KursRab {
 
     public static void main(String[] args) {
         int[][] init = {{1, 2, 3}, 
-                        {4, 5, 8}, 
-                        {7, 6, 0}};
+                        {5, 6, 4}, 
+                        {7, 8, 0}};
         int[][] goal = {{1, 2, 3}, 
                         {4, 5, 6}, 
                         {7, 8, 0}};
