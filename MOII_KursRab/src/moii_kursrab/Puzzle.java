@@ -3,11 +3,6 @@ package moii_kursrab;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class Puzzle {
     
@@ -19,19 +14,17 @@ public class Puzzle {
         this.goalState = new TableState(goalTable);
     }
     private boolean isSolvable() {
-        int sum = 0; int index = 0;
-        int[] tableAsVector = new int[this.initState.table.length*this.initState.table[0].length];
-        for (int[] tableLine : this.initState.table)
-            for (int tableCell : tableLine)
-                tableAsVector[index++] = tableCell;
-        for (int i1 = 0; i1 < tableAsVector.length - 1; i1++)
-            for (int i2 = i1 + 1; i2 < tableAsVector.length; i2++)
-                if ((tableAsVector[i1] > tableAsVector[i2]) && 
-                        (tableAsVector[i2] != 0)) sum++;
+        int sum = 0;
+        int dim = this.initState.table.length;
+        int n = (int)Math.pow(dim, 2);
+        for (int i = 0; i < n-1; i++)
+            for (int j = i + 1; j < n; j++)
+                if ((this.initState.table[i/dim][i%dim] > this.initState.table[j/dim][j%dim]) 
+                        && (this.initState.table[j/dim][j%dim] > 0))
+                    sum++;
         //return (sum % 2 == 0); нечет n
         //return ((sum + this.initState.emptyRow + 1) % 2 == 0); чет n
-        return (this.initState.table.length % 2 != 0) ? (sum % 2 == 0) : 
-                ((sum + this.initState.emptyRow + 1) % 2 == 0);
+        return (dim % 2 != 0) ? (sum % 2 == 0) : ((sum + this.initState.emptyRow + 1) % 2 == 0);
     }
     public TableState[] solve() {
         if (!this.isSolvable()) return null;

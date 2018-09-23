@@ -61,7 +61,7 @@ public class TableState {
         this.table[this.emptyRow][this.emptyCol] = 0;
     }
     private int calculateHeuristicDistance(TableState goalState) {
-        int heuristicDistance = 0;
+        int distance = 0;
         int n = this.table.length;
         for (int iCurrent = 0; iCurrent < n; iCurrent++)
             for (int jCurrent = 0; jCurrent < n; jCurrent++)
@@ -69,10 +69,10 @@ public class TableState {
                     for (int jGoal = 0; jGoal < n; jGoal++)
                         if (this.table[iCurrent][jCurrent] ==
                                 goalState.table[iGoal][jGoal]) {
-                            heuristicDistance += abs(iGoal - iCurrent) + 
+                            distance += abs(iGoal - iCurrent) + 
                                     abs(jGoal - jCurrent);
                         }
-        return heuristicDistance;
+        return distance;
     }
     public int getHeuristic() {
         return this.heuristicDepth + this.heuristicDistance;
