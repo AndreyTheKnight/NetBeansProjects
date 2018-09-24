@@ -13,7 +13,6 @@ public class TableState {
     public          int         emptyRow;
     public          int         emptyCol;
     private final   int         heuristicDistance;
-    private final   int         heuristicDepth;
     public          TableState  previousState;
     
     public TableState(int[][] table) {
@@ -25,7 +24,6 @@ public class TableState {
                     this.emptyCol = j;
                 }
         this.heuristicDistance = 0;
-        this.heuristicDepth = 0;
         this.previousState = null;
     }
     public TableState(TableState previousState, MoveDirection moveDirection, 
@@ -35,7 +33,6 @@ public class TableState {
             this.table[i] = previousState.table[i].clone();
         this.move(previousState, moveDirection);
         this.heuristicDistance = this.calculateHeuristicDistance(goalState);
-        this.heuristicDepth = previousState.heuristicDepth + 1;
         this.previousState = previousState;
     }
     private void move(TableState previousState, MoveDirection moveDirection)
@@ -75,7 +72,7 @@ public class TableState {
         return distance;
     }
     public int getHeuristic() {
-        return this.heuristicDepth + this.heuristicDistance;
+        return this.heuristicDistance;
     }
     public boolean hasBetterHeuristic(TableState compareWith) {
         return (this.getHeuristic()) < (compareWith.getHeuristic());

@@ -22,8 +22,6 @@ public class Puzzle {
                 if ((this.initState.table[i/dim][i%dim] > this.initState.table[j/dim][j%dim]) 
                         && (this.initState.table[j/dim][j%dim] > 0))
                     sum++;
-        //return (sum % 2 == 0); нечет n
-        //return ((sum + this.initState.emptyRow + 1) % 2 == 0); чет n
         return (dim % 2 != 0) ? (sum % 2 == 0) : ((sum + this.initState.emptyRow + 1) % 2 == 0);
     }
     public TableState[] solve() {
@@ -33,10 +31,11 @@ public class Puzzle {
         ArrayList<TableState> closed = new ArrayList<>();
         try {
             for (open.add(this.initState); !open.peek().equals(this.goalState); ) {
+                closed.add(open.poll());
                 LinkedList<TableState> newStates = new LinkedList<>();
                 for (TableState.MoveDirection moveDirection : TableState.MoveDirection.values())
                     try {
-                        newStates.addFirst(new TableState(open.peek(), moveDirection, this.goalState));
+                        newStates.addFirst(new TableState(closed.get(closed.size()-1), moveDirection, this.goalState));
                         int idx = closed.indexOf(newStates.peekFirst());
                         if (newStates.peekFirst().hasBetterHeuristic(closed.get(idx))) {
                             closed.set(idx, closed.get(closed.size()-1));
@@ -44,7 +43,6 @@ public class Puzzle {
                         } else
                             newStates.removeFirst();
                     } catch (ArrayIndexOutOfBoundsException e) {}
-                closed.add(open.poll());
                 open.addAll(newStates);
             }
         } catch (NullPointerException e) {
