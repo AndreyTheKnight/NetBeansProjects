@@ -33,14 +33,10 @@ public class Puzzle {
             for (open.add(this.initState); !open.peek().equals(this.goalState); ) {
                 closed.add(open.poll());
                 LinkedList<TableState> newStates = new LinkedList<>();
-                for (TableState.MoveDirection moveDirection : TableState.MoveDirection.values())
+                for (TableState.MoveDirection moveDirection : TableState.MoveDirection.values()) 
                     try {
                         newStates.addFirst(new TableState(closed.get(closed.size()-1), moveDirection, this.goalState));
-                        int idx = closed.indexOf(newStates.peekFirst());
-                        if (newStates.peekFirst().hasBetterHeuristic(closed.get(idx))) {
-                            closed.set(idx, closed.get(closed.size()-1));
-                            closed.remove(closed.size()-1);
-                        } else
+                        if (open.contains(newStates.peekFirst()) || closed.contains(newStates.peekFirst()))
                             newStates.removeFirst();
                     } catch (ArrayIndexOutOfBoundsException e) {}
                 open.addAll(newStates);

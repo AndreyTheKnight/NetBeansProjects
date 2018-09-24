@@ -74,9 +74,6 @@ public class TableState {
     public int getHeuristic() {
         return this.heuristicDistance;
     }
-    public boolean hasBetterHeuristic(TableState compareWith) {
-        return (this.getHeuristic()) < (compareWith.getHeuristic());
-    }
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
